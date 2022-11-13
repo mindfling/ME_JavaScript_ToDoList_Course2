@@ -1,10 +1,7 @@
+/** lets make some lovely gradient background */
 body {
-  /* background: rgb(177,26,203); */
   /* background: linear-gradient(0deg, rgba(177,26,203,0.7343137083935136) 7%, rgba(253,187,45,1) 93%); */
-
-  /* background: rgb(177, 26, 203);
-  background: linear-gradient(0deg, rgba(176, 26, 203, 0.186) 7%, rgba(253, 187, 45, 1.0) 95%); */
-
+  /* background: linear-gradient(0deg, rgba(176, 26, 203, 0.186) 7%, rgba(253, 187, 45, 1.0) 95%); */
   background: rgba(253,187,45,1);
   background: linear-gradient(333deg, rgba(199, 20, 231, 0.809) 7%, rgba(253,187,45,1) 93%);  
 }
