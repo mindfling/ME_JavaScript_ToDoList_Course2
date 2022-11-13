@@ -39,6 +39,7 @@ export const renderTasks = (list, tasksData = []) => {
     });
     rowsNumberRecount(list);
   } else {
+    // если список еще пуст рендерим заглушку
     const tr = createElement('tr', {
       className: 'table-row',
     });
@@ -46,8 +47,22 @@ export const renderTasks = (list, tasksData = []) => {
       className: 'table-cell text-center text-muted',
       colSpan: 4,
       rowSpan: 1,
-      textContent: 'Список пока еще пуст...',
+      // textContent: 'Список пока еще пуст...',
     });
+    // td.append( createElement('p', {
+      //   className: 'alert alert-success',
+      //   innerHTML: 'Список дел пока еще пуст...',
+      // }))
+    td.append(
+      createElement('p', {
+        className: 'alert alert-danger show',
+        innerHTML: `<br>
+<span class="spinner-border spinner-border-sm"></span><br>
+<br>
+<b>Список дел пока еще пуст</b><br>
+Добавьте и сохраните новую задачу ... 
+<br><br>`,
+      }));
     tr.append(td);
     list.append(tr);
   }
