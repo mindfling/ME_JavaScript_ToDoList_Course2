@@ -1,4 +1,10 @@
 // * dom consts app elements:
-const app = document.querySelector('.app-container');
+const getApp = (selector) => document.querySelector(selector);
 
-export default {app};
+const app = document.querySelector('.app-container');
+console.log('app: ', app);
+
+export default {
+  app,
+  getApp,
+};
