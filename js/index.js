@@ -1,5 +1,6 @@
 // * main index script *
 
+import { formControl } from './modules/control.js';
 import {
   createForm,
   createTable,
@@ -7,7 +8,7 @@ import {
   modifyAppContainer,
 } from './modules/createElements.js';
 import appElements from './modules/elements.js';
-import { renderTasks } from './modules/render.js';
+import {clearList, renderTasks} from './modules/render.js';
 import {getTaskData} from './modules/serviceStorage.js';
 
 const {getApp} = appElements;
@@ -27,9 +28,6 @@ const init = (appSelector, appTitle) => {
   // const STORAGE_KEY = 'todo_app_' + latUserName;
   // const userName = 'name';
   const STORAGE_KEY = 'todo';
-  // console.log('userNameCyr: ', userNameCyr);
-  // console.log('latUserName: ', latUserName);
-  console.log('STORAGE_KEY: ', STORAGE_KEY);
 
   // пробуем хранилище
   const data = getTaskData(STORAGE_KEY);
@@ -46,13 +44,16 @@ const init = (appSelector, appTitle) => {
   const form = createForm();
   // обертка таблицы и основа самой таблицы
   const {table, tableWrapper, head, list} = createTable();
-  console.log('list: ', list);
 
+  // просто рендерим список дел в List tableBody
   renderTasks(list, data); // весь перерендер списка здесь
-
   // добавляем все в дом
   app.append(h1, form, tableWrapper);
-  console.log('tableWrapper: ', tableWrapper);
+
+  // после полного формирования списка его можно очищать и удалять
+  // clearList(list);
+  // вешаем слушатели на форму
+  formControl({form, list, storageKey: STORAGE_KEY});
 };
 
 window.initTodo = init;

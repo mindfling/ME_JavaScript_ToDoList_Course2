@@ -27,12 +27,6 @@ export const createElement = (tag, param = {}, text) => {
 };
 
 
-// export const createTitleH1 = (title) => {
-//   const h1 = document.createElement('h1');
-//   h1.textContent = title;
-//   return title;
-// };
-
 export const createTitle = (title) => createElement('h1', {
   className: 'app-title mb-5 fw-bold',
   textContent: title,
@@ -41,7 +35,10 @@ export const createTitle = (title) => createElement('h1', {
 
 export const createButton = ({id, className, type = 'button', textContent}) => {
   const button = createElement('button');
-  Object.assign(button, {id, className, type, textContent});
+  Object.assign(button, {className, type, textContent});
+  if (id) {
+    Object.assign(button, {id});
+  }
   return button;
 };
 
@@ -58,11 +55,11 @@ export const createForm = () => {
     innerHTML: `<input name="description" type="text" class="form-control" placeholder="ввести задачу">`, // ???
   });
 
-  const buttonSubmit = createElement('button', {
-    type: 'submit',
+  const buttonSubmit = createButton({
     className: 'btn btn-primary me-3',
-  },
-  'Сохранить');
+    textContent: 'Сохранить',
+    type: 'submit',
+  });
 
   const buttonReset = createButton({
     className: 'btn btn-warning',
@@ -70,20 +67,6 @@ export const createForm = () => {
     type: 'reset',
   });
 
-  /* **
-    form.insertAdjacentHTML('beforeend', `
-      <form class="d-flex align-items-center mb-5">
-        <label class="form-group me-3 mb-0">
-          <input type="text" class="form-control" placeholder="ввести задачу">
-        </label>
-        <button type="submit" class="btn btn-primary me-3">
-          Сохранить
-        </button>
-        <button type="reset" class="btn btn-warning">
-          Очистить
-        </button>
-      </form>`);
-*/
   form.append(lable, buttonSubmit, buttonReset);
   return form;
 };
@@ -96,7 +79,7 @@ export const createTable = () => {
   const table = createElement('table', {
     className: 'table table-hover table-bordered',
   });
-  const thead = createElement('thead');
+  const thead = createElement('thead', {className: 'table-head'});
   const headRow = createElement('tr');
 
   const thCellNumber = createElement('th', {}, '№');
@@ -104,7 +87,7 @@ export const createTable = () => {
   const thCellStatus = createElement('th', {}, 'Статус');
   const thCellAction = createElement('th', {}, 'Действия');
 
-  const tbody = createElement('tbody');
+  const tbody = createElement('tbody', {className: 'table-body'});
 
   table.thead = thead;
   table.tbody = tbody;
@@ -124,12 +107,16 @@ export const createTable = () => {
 
 
 export const createRow = ({
-  id = '0000000',
-  number = 0,
-  description,
-  status,
+  id, // *
+  number = 1, // *
+  description, // *
+  status, // 
+  priority, //
 }) => {
-  const row = createElement('tr');
+  const row = createElement('tr', {
+    id,
+    className: 'table__row',
+  });
   if (status === 'wait') {
     row.classList.add('table-warning');
   } else if (status === 'done') {
@@ -137,19 +124,20 @@ export const createRow = ({
   } else {
     row.classList.add('table-light');
   }
-  const tdCellNumber = createElement('td', {className: 'table__cell table__cell_number'}, number ? number : 0);
-  const tdCellTask = createElement('td', {className: 'table__cell table__cell_task'}, description);
-  const tdCellStatus = createElement('td', {className: 'table__cell table__cell_elemnt'}, status);
-  const tdCellAction = createElement('td', {className: 'table__cell table__cell_action'});
+
+  const tdCellNumber = createElement('td', {className: 'table__cell table__cell_number'}, number ? number : 0); // порядковый номер в ячейке
+  const tdCellTask = createElement('td', {className: 'table__cell table__cell_task'}, description); // описание
+  const tdCellStatus = createElement('td', {className: 'table__cell table__cell_elemnt'}, status); // статус [wait | done]
+  const tdCellAction = createElement('td', {className: 'table__cell table__cell_action'}); // кнопки действий над задачей [Удалить | Завершить]
   row.append(tdCellNumber, tdCellTask, tdCellStatus, tdCellAction);
   const btnDangerRemove = createButton({
     id,
-    className: 'btn btn-outline-danger me-2',
+    className: 'btn btn-danger me-2',
     textContent: 'Удалить',
   });
   const btnSuccessDone = createButton({
     id,
-    className: 'btn btn-outline-success',
+    className: 'btn btn-success',
     textContent: 'Завершить',
   });
   tdCellAction.append(btnDangerRemove, btnSuccessDone);

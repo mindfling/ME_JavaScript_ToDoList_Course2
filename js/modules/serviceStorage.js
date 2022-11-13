@@ -16,12 +16,12 @@ export const setTaskData = (storageKey, data) =>
 export const addTaskData = (storageKey, task) => {
   const data = getTaskData(storageKey);
   data.push(task);
-  setTaskData(data);
+  setTaskData(storageKey, data);
 };
 
 // удаляем контакт из хранилища по номеру телефона
 export const removeTaskData = (storageKey, taskId) => {
   const data = getTaskData(storageKey);
   const newData = data.filter(item => item.id !== taskId); // фильтруем
-  setTaskData(newData);
+  setTaskData(storageKey, newData);
 };

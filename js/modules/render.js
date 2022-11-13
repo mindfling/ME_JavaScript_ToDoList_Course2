@@ -13,31 +13,34 @@ export const rowsNumberRecount = (list) => {
 // todo
 // * clear list
 export const clearList = (list) => {
+  // const list = document.querySelector('.table-body');
+  console.log('list: ', list);
+
   while (list.lastChild) {
     list.lastChild.remove();
   }
 };
 
 // todo
-export const renderTasks = (list, tasksData = []) => {
-  // очищаем список
-  clearList(list);
+export const renderTasks = (list, tasksData) => {
+  console.log('list: ', list);
+  console.log('tasksData: ', tasksData);
   // перебираем массив объектов
-  if (Array.isArray(tasksData && tasksData.length > 0)) {
+  if (Array.isArray(tasksData) && tasksData.length > 0) {
     // вставляем ряды в таблицу
     tasksData.forEach((task, index) => {
+      console.log('task: ', task, task.id, task.number, task.description, task.status, task.priority);
       list.append(
-        createRow(index + 1, {
+        createRow({
           id: task.id,
-          title: task.title,
-          category: task.category,
+          number: task?.number,
           description: task.description,
           status: task.status,
           priority: task.priority,
         }),
       );
     });
-    rowsNumberRecount(list);
+    // rowsNumberRecount(list);
   } else {
     // если список еще пуст рендерим заглушку
     const tr = createElement('tr', {
