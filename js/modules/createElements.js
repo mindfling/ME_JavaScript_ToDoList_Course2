@@ -17,7 +17,7 @@ export const modifyAppContainer = (app) => {
 };
 
 // * create element
-const createElement = (tag, param = {}, text) => {
+export const createElement = (tag, param = {}, text) => {
   const element = document.createElement(tag);
   Object.assign(element, param);
   if (text) {

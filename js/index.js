@@ -1,18 +1,26 @@
 // * main index script *
 
-import {createForm, createTable, createTitle, modifyAppContainer} from './modules/createElements.js';
+import {
+  createForm,
+  createTable,
+  createTitle,
+  modifyAppContainer,
+} from './modules/createElements.js';
 import appElements from './modules/elements.js';
+import { renderTasks } from './modules/render.js';
 import {getTaskData} from './modules/serviceStorage.js';
+
 const {getApp} = appElements;
 console.log('appElements: ', appElements);
 console.log('getApp: ', getApp);
 // import {trans} from './modules/utils.js';
+// import {userLogin} from './modules/login.js';
 
 
 const init = (appSelector, appTitle) => {
   console.log('Загрузка...');
 
-  // * запрос имени
+  // * запрос имени in userLogin login.js
   // eslint-disable-next-line max-len
   // const userNameCyr = prompt('Введите имя пользователя приложением', 'Эмпты');
   // const latUserName = trans(userNameCyr.trim());
@@ -38,9 +46,13 @@ const init = (appSelector, appTitle) => {
   const form = createForm();
   // обертка таблицы и основа самой таблицы
   const {table, tableWrapper, head, list} = createTable();
+  console.log('list: ', list);
+
+  renderTasks(list, data); // весь перерендер списка здесь
 
   // добавляем все в дом
   app.append(h1, form, tableWrapper);
+  console.log('tableWrapper: ', tableWrapper);
 };
 
 window.initTodo = init;
