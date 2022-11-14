@@ -132,12 +132,12 @@ export const createRow = ({
   row.append(tdCellNumber, tdCellTask, tdCellStatus, tdCellAction);
   const btnDangerRemove = createButton({
     id,
-    className: 'btn btn-danger me-2',
+    className: 'btn btn-danger btn_remove me-2',
     textContent: 'Удалить',
   });
   const btnSuccessDone = createButton({
     id,
-    className: 'btn btn-success',
+    className: 'btn btn-success btn_done',
     textContent: 'Завершить',
   });
   tdCellAction.append(btnDangerRemove, btnSuccessDone);

@@ -1,10 +1,16 @@
 // * события
 
 import {clearList, renderTasks} from './render.js';
-import {addTaskData, getTaskData} from './serviceStorage.js';
+import {
+  addTaskData,
+  finishTaskData,
+  getTaskData,
+  removeTaskData,
+} from './serviceStorage.js';
+import {getRandomId} from './utils.js';
+
 
 export const formControl = ({form, list, storageKey}) => {
-  // form = document.forms[0]; // form.taskForm
   // const description = form.description; // todo onchonge empty field
   // отрабатываем событие формы
   form.addEventListener('submit', (event) => {
@@ -13,16 +19,14 @@ export const formControl = ({form, list, storageKey}) => {
 
     const formdata = new FormData(form).entries();
     const fields = Object.fromEntries(formdata);
-    console.log('fields: ', fields.description);
 
     const newTask = {
-      number: parseInt(Math.random().toString().substring(2, 6)), // todo убрать
-      id: Math.random().toString().substring(2, 16), // string
-      description: fields.description, // * единственное информ поле формы ))
+      // number: parseInt(Math.random().toString().substring(2, 6)), // toda
+      id: getRandomId(), // string
+      description: fields.description, // description
       priority: 'обычный приоритет', // toda select [light | warning | denger]
       status: 'wait', // fields.status, // toda [wait | done]
     };
-    console.log('newTask: ', newTask);
     addTaskData(storageKey, newTask);
     clearList(list);
     renderTasks(list, getTaskData(storageKey));
@@ -31,9 +35,35 @@ export const formControl = ({form, list, storageKey}) => {
   return;
 };
 
-const tableControl = (list, data) => {
+
+export const tableControl = ({data, list, storageKey}) => {
   console.log('list: ', list);
+
   // todo
-  //
+  // навешиваем событие на таблицу делегируем на кнопки
+  list.addEventListener('click', event => {
+    const target = event.target;
+    console.log('target: ', target);
+
+    if (target.classList.contains('btn_remove')) {
+      console.log('Удаляем задание', target.id);
+      removeTaskData(storageKey, target.id);
+      clearList(list);
+      renderTasks(list, getTaskData(storageKey));
+      return;
+    }
+
+    if (target.classList.contains('btn_done')) {
+      console.log('Завершаем задание', target.id);
+      // todo
+      finishTaskData(storageKey, target.id);
+      // todo
+      // изменяем поле и перерендериваем
+      clearList(list);
+      renderTasks(list, getTaskData(storageKey));
+      return;
+    }
+  });
+
   return list;
 };

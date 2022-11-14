@@ -29,7 +29,7 @@ export const renderTasks = (list, tasksData) => {
   if (Array.isArray(tasksData) && tasksData.length > 0) {
     // вставляем ряды в таблицу
     tasksData.forEach((task, index) => {
-      console.log('task: ', task, task.id, task.number, task.description, task.status, task.priority);
+      // console.log('task: ', task, task.id, task.number, task.description, task.status, task.priority);
       list.append(
         createRow({
           id: task.id,
@@ -40,7 +40,7 @@ export const renderTasks = (list, tasksData) => {
         }),
       );
     });
-    // rowsNumberRecount(list);
+    rowsNumberRecount(list);
   } else {
     // если список еще пуст рендерим заглушку
     const tr = createElement('tr', {

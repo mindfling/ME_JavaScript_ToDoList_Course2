@@ -1,6 +1,6 @@
 // * main index script *
 
-import { formControl } from './modules/control.js';
+import {formControl, tableControl} from './modules/control.js';
 import {
   createForm,
   createTable,
@@ -54,6 +54,8 @@ const init = (appSelector, appTitle) => {
   // clearList(list);
   // вешаем слушатели на форму
   formControl({form, list, storageKey: STORAGE_KEY});
+  // вешаем слушатели на список дел
+  tableControl({list, data, storageKey: STORAGE_KEY});
 };
 
 window.initTodo = init;

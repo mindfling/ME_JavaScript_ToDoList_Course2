@@ -25,3 +25,23 @@ export const removeTaskData = (storageKey, taskId) => {
   const newData = data.filter(item => item.id !== taskId); // фильтруем
   setTaskData(storageKey, newData);
 };
+
+export const finishTaskData = (storageKey, taskId) => {
+  const data = getTaskData(storageKey);
+  const updateData = data.map((task) => {
+    // выбираем по id
+    if (task.id === taskId) {
+      console.log(task);
+      console.log('task  id: ', task.id);
+      console.log('description: ', task.description);
+      console.log('task priory: ', task.priority);
+      console.log('task status: ', task.status);
+      // изменяем поле выполнено
+      task.status = 'done'; //
+      return task;
+    }
+    // остальные не изменяем
+    return task;
+  });
+  setTaskData(storageKey, updateData);
+};
