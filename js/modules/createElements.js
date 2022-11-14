@@ -26,13 +26,13 @@ export const createElement = (tag, param = {}, text) => {
   return element;
 };
 
-
+// * title
 export const createTitle = (title) => createElement('h1', {
   className: 'app-title mb-5 fw-bold',
   textContent: title,
 });
 
-
+// * button
 export const createButton = ({id, className, type = 'button', textContent}) => {
   const button = createElement('button');
   Object.assign(button, {className, type, textContent});
@@ -42,7 +42,7 @@ export const createButton = ({id, className, type = 'button', textContent}) => {
   return button;
 };
 
-
+// * form
 export const createForm = () => {
   const form = createElement('form', {
     className: 'task-form d-flex align-items-center mb-4',
@@ -71,7 +71,7 @@ export const createForm = () => {
   return form;
 };
 
-
+// * table
 export const createTable = () => {
   const tableWrapper = createElement('div', {
     className: 'table-wrapper',
@@ -105,12 +105,12 @@ export const createTable = () => {
   };
 };
 
-
+// * create row of task
 export const createRow = ({
   id, // *
   number = 1, // *
   description, // *
-  status, // 
+  status, // ?
   priority, //
 }) => {
   const row = createElement('tr', {

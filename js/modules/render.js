@@ -10,7 +10,6 @@ export const rowsNumberRecount = (list) => {
   });
 };
 
-// todo
 // * clear list
 export const clearList = (list) => {
   // const list = document.querySelector('.table-body');
@@ -21,7 +20,6 @@ export const clearList = (list) => {
   }
 };
 
-// todo
 export const renderTasks = (list, tasksData) => {
   // перебираем массив объектов
   if (Array.isArray(tasksData) && tasksData.length > 0) {
@@ -69,3 +67,7 @@ export const renderTasks = (list, tasksData) => {
   return;
 };
 
+export const renderApp = ({}) => {
+  // todo render all in app
+  return;
+}

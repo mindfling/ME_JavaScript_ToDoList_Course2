@@ -1,5 +1,6 @@
 // * Local Storage
 
+// ключ для localStorage по умолчанию
 const KEY = 'todo';
 
 // получаем текущие данные из хранилища
@@ -26,16 +27,13 @@ export const removeTaskData = (storageKey, taskId) => {
   setTaskData(storageKey, newData);
 };
 
+// завершение задания
 export const finishTaskData = (storageKey, taskId) => {
   const data = getTaskData(storageKey);
   const updateData = data.map((task) => {
     // выбираем по id
     if (task.id === taskId) {
       console.log(task);
-      console.log('task  id: ', task.id);
-      console.log('description: ', task.description);
-      console.log('task priory: ', task.priority);
-      console.log('task status: ', task.status);
       // изменяем поле выполнено
       task.status = 'done'; //
       return task;

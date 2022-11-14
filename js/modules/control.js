@@ -11,7 +11,6 @@ import {getRandomId} from './utils.js';
 
 // * события формы submit и верификация поля
 export const formControl = ({form, list, storageKey}) => {
-  // const description = form.description; // todo onchonge empty field
   // отрабатываем событие формы
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -39,8 +38,6 @@ export const formControl = ({form, list, storageKey}) => {
 export const tableControl = ({data, list, storageKey}) => {
   console.log('list: ', list);
 
-  // todo
-  // навешиваем событие на таблицу делегируем на кнопки
   list.addEventListener('click', event => {
     const target = event.target;
 

@@ -9,7 +9,7 @@ import {
 import {getTaskData} from './modules/serviceStorage.js';
 import appElements from './modules/elements.js';
 import {getLoginAuthStorageKey} from './modules/login.js';
-import {clearList, renderTasks} from './modules/render.js';
+import {renderApp, renderTasks} from './modules/render.js';
 import {formControl, tableControl} from './modules/control.js';
 
 const {getApp} = appElements;
@@ -34,8 +34,7 @@ const init = (appSelector, appTitle) => {
   console.log('STORAGE_KEY: ', STORAGE_KEY);
 
 
-  // добавляем заголовок
-  // todo in render.js
+  // добавляем заголовок in render.js
   // renderApp()
   const h1 = createTitle(appTitle + ' ' + userName);
   console.log('appTitle: ', appTitle);
