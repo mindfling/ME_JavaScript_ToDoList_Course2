@@ -120,11 +120,12 @@ export const createRow = ({
   if (status === 'wait') {
     row.classList.add('table-warning');
   } else if (status === 'done') {
-    row.classList.add('table-primary', 'text-decoration-line-through');
+    row.classList.add('table-primary', 'text-decoration-line-through'); // * перечерк line-through
   } else {
     row.classList.add('table-light');
   }
 
+  // todo перечеркивание поля а не всей строки
   const tdCellNumber = createElement('td', {className: 'table__cell table__cell_number'}, number ? number : 0); // порядковый номер в ячейке
   const tdCellTask = createElement('td', {className: 'table__cell table__cell_task'}, description); // описание
   const tdCellStatus = createElement('td', {className: 'table__cell table__cell_elemnt'}, status); // статус [wait | done]

@@ -69,6 +69,7 @@ const allchars = {
   'ю': 'yu',
 };
 // eslint-disable-next-line max-len
+// transliterate from Stack over Flow
 const transliterate = (word) => word.split('').map((char) => allchars[char] || char).join('');
 
 // * transliterate name of user for hash storage key
@@ -120,12 +121,13 @@ export const trans = (word) => {
     '/': '',
     '': '',
   };
+  // все символы к ниждему регистру
   word = word.toLowerCase();
   // eslint-disable-next-line arrow-body-style
   const result = word.split('').map(ch => {
     return chars[ch] || (chars[ch] === '' ? chars[ch] : ch);
   }).join('');
-  return result.toUpperCase();
+  return result;
 };
 
 // * get Random digits string with substring

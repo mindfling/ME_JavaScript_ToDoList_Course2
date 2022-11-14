@@ -9,7 +9,7 @@ import {
 } from './serviceStorage.js';
 import {getRandomId} from './utils.js';
 
-
+// * события формы submit и верификация поля
 export const formControl = ({form, list, storageKey}) => {
   // const description = form.description; // todo onchonge empty field
   // отрабатываем событие формы
@@ -35,7 +35,7 @@ export const formControl = ({form, list, storageKey}) => {
   return;
 };
 
-
+// * события таблицы действия с делами
 export const tableControl = ({data, list, storageKey}) => {
   console.log('list: ', list);
 
@@ -43,8 +43,8 @@ export const tableControl = ({data, list, storageKey}) => {
   // навешиваем событие на таблицу делегируем на кнопки
   list.addEventListener('click', event => {
     const target = event.target;
-    console.log('target: ', target);
 
+    // * удаление задания
     if (target.classList.contains('btn_remove')) {
       console.log('Удаляем задание', target.id);
       removeTaskData(storageKey, target.id);
@@ -53,12 +53,12 @@ export const tableControl = ({data, list, storageKey}) => {
       return;
     }
 
+    // * завершение задания --перечеркнуть--
     if (target.classList.contains('btn_done')) {
-      console.log('Завершаем задание', target.id);
-      // todo
+      console.log('Завершаем задание', target.id, target);
       finishTaskData(storageKey, target.id);
-      // todo
       // изменяем поле и перерендериваем
+      // todo можно отдельную строку
       clearList(list);
       renderTasks(list, getTaskData(storageKey));
       return;

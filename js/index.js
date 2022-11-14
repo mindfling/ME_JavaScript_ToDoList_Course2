@@ -1,45 +1,44 @@
 // * main index script *
 
-import {formControl, tableControl} from './modules/control.js';
 import {
   createForm,
   createTable,
   createTitle,
   modifyAppContainer,
 } from './modules/createElements.js';
-import appElements from './modules/elements.js';
-import {clearList, renderTasks} from './modules/render.js';
 import {getTaskData} from './modules/serviceStorage.js';
+import appElements from './modules/elements.js';
+import {getLoginAuthStorageKey} from './modules/login.js';
+import {clearList, renderTasks} from './modules/render.js';
+import {formControl, tableControl} from './modules/control.js';
 
 const {getApp} = appElements;
-console.log('appElements: ', appElements);
-console.log('getApp: ', getApp);
-// import {trans} from './modules/utils.js';
-// import {userLogin} from './modules/login.js';
-
 
 const init = (appSelector, appTitle) => {
   console.log('Загрузка...');
 
-  // * запрос имени in userLogin login.js
-  // eslint-disable-next-line max-len
-  // const userNameCyr = prompt('Введите имя пользователя приложением', 'Эмпты');
-  // const latUserName = trans(userNameCyr.trim());
-  // const STORAGE_KEY = 'todo_app_' + latUserName;
-  // const userName = 'name';
-  const STORAGE_KEY = 'todo';
-
-  // пробуем хранилище
-  const data = getTaskData(STORAGE_KEY);
-  console.log('data: ', data);
-
-
+  // далее работаем с приложение
   // * получаем контейнер
   const app = getApp(appSelector);
   // модифицируем контейнер
   modifyAppContainer(app);
+
+
+  // * запрос имени in userLogin login.js
+  // const STORAGE_KEY = 'todo';
+  const userData = getLoginAuthStorageKey();
+  const STORAGE_KEY = userData.storageKey;
+  const {userName} = userData;
+  console.log('userName: ', userName);
+  const data = getTaskData(STORAGE_KEY);
+  console.log('STORAGE_KEY: ', STORAGE_KEY);
+
+
   // добавляем заголовок
-  const h1 = createTitle(appTitle);
+  // todo in render.js
+  // renderApp()
+  const h1 = createTitle(appTitle + ' ' + userName);
+  console.log('appTitle: ', appTitle);
   // добавляем форму вверху
   const form = createForm();
   // обертка таблицы и основа самой таблицы

@@ -23,13 +23,10 @@ export const clearList = (list) => {
 
 // todo
 export const renderTasks = (list, tasksData) => {
-  console.log('list: ', list);
-  console.log('tasksData: ', tasksData);
   // перебираем массив объектов
   if (Array.isArray(tasksData) && tasksData.length > 0) {
     // вставляем ряды в таблицу
     tasksData.forEach((task, index) => {
-      // console.log('task: ', task, task.id, task.number, task.description, task.status, task.priority);
       list.append(
         createRow({
           id: task.id,
