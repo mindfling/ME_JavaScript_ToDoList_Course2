@@ -4,6 +4,7 @@ import {clearList, renderTasks} from './render.js';
 import {
   addTaskData,
   finishTaskData,
+  getDataOfTask,
   getTaskData,
   removeTaskData,
 } from './serviceStorage.js';
@@ -31,24 +32,33 @@ export const formControl = ({form, list, storageKey}) => {
 
 // * события таблицы действия с делами
 export const tableControl = ({data, list, storageKey}) => {
-  console.log('list: ', list);
-
+  // навешиваем слушатель
   list.addEventListener('click', event => {
     const target = event.target;
 
     // * удаление задания
     if (target.classList.contains('btn_remove')) {
-      console.log('Удаляем задание', target.id);
-      removeTaskData(storageKey, target.id);
-      clearList(list);
-      renderTasks(list, getTaskData(storageKey));
-      return;
+      // todo подтверждение на удаление задачи
+      const taskId = target.dataset?.id;
+      // переспрашиваем у пользователя
+      if (confirm(`Удалить задание? ID ${taskId}`)) {
+        console.log('Удаляем задание', taskId);
+        removeTaskData(storageKey, taskId);
+        clearList(list);
+        renderTasks(list, getTaskData(storageKey));
+        return;
+      } else {
+        console.log('Задание не удаляем');
+      }
     }
 
     // * завершение задания --перечеркнуть--
     if (target.classList.contains('btn_done')) {
-      console.log('Завершаем задание', target.id, target);
-      finishTaskData(storageKey, target.id);
+      // todo проверять завершина ли уже задача
+      const taskId = target.dataset?.id;
+      console.log(getDataOfTask(storageKey, taskId)); // ??
+      console.log('Завершаем задание', taskId);
+      finishTaskData(storageKey, taskId);
       // изменяем поле и перерендериваем
       // todo можно отдельную строку
       clearList(list);

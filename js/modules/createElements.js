@@ -128,19 +128,17 @@ export const createRow = ({
   });
 
   if (priority === 'warning') {
-    row.classList.add('table-warning'); // важные
+    row.classList.add('table-warning'); // ? priority warning важные
   } else if (priority === 'danger') {
-    row.classList.add('table-danger'); // срочные
+    row.classList.add('table-danger'); // ? priority danger срочные
   } else {
-    row.classList.add('table-light'); // остальные обычные
+    row.classList.add('table-light'); // ? priority light остальные обычные
   }
 
-  // todo перечеркивание поля а не всей строки
   const tdCellNumber = createElement('td', {className: 'table__cell table__cell_number fw-bold text-secondary'}, number ? number : 0); // порядковый номер в ячейке
 
   const tdCellTask = createElement('td', {className: 'table__cell table__cell_task'}, description); // описание
   if (status === 'done') {
-    // tdCellTask.classList.add('table-warning');
     tdCellTask.classList.add('text-decoration-line-through'); // * перечерк line-through
   }
 
@@ -154,16 +152,19 @@ export const createRow = ({
 
   row.append(tdCellNumber, tdCellTask, tdCellStatus, tdCellAction);
   const btnDangerRemove = createButton({
-    id,
+    // id,
     className: 'btn btn-danger btn_remove me-2',
     textContent: 'Удалить',
   });
+  btnDangerRemove.dataset.id = id;
   const btnSuccessDone = createButton({
-    id,
+    // id,
     className: 'btn btn-success btn_done',
     textContent: 'Завершить',
   });
+  btnSuccessDone.dataset.id = id;
   tdCellAction.append(btnDangerRemove, btnSuccessDone);
+  // возворащаем весь наш ряд Задачи
   return row;
 };
 

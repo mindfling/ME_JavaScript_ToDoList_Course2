@@ -1,7 +1,7 @@
 // * Local Storage
 
 // ключ для localStorage по умолчанию
-const KEY = 'todo';
+// const KEY = 'todo';
 
 // получаем текущие данные из хранилища
 export const getTaskData = (storageKey) => {
@@ -42,4 +42,18 @@ export const finishTaskData = (storageKey, taskId) => {
     return task;
   });
   setTaskData(storageKey, updateData);
+};
+
+
+export const getDataOfTask = (storageKey, taskId) => {
+  const data = getTaskData(storageKey);
+  const tasks = data.filter((task) => (task.id == taskId));
+  return tasks;
+};
+
+// get Data Product
+export const getDataProduct = (data, id) => {
+  // eslint-disable-next-line eqeqeq
+  const products = data.filter(product => (product.id == id));
+  return products[0];
 };
