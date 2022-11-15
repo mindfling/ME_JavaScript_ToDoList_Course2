@@ -1,4 +1,4 @@
-// * события
+// * события controls
 
 import {clearList, renderTasks} from './render.js';
 import {
@@ -36,34 +36,44 @@ export const tableControl = ({data, list, storageKey}) => {
   list.addEventListener('click', event => {
     const target = event.target;
 
-    // * удаление задания
+    // * удаление задания remove
     if (target.classList.contains('btn_remove')) {
-      // todo подтверждение на удаление задачи
+      // подтверждение на удаление задачи
       const taskId = target.dataset?.id;
+      const task = getDataOfTask(storageKey, taskId);
       // переспрашиваем у пользователя
-      if (confirm(`Удалить задание? ID ${taskId}`)) {
+      if (confirm(`Удалить задание "${task.description}" ?`)) {
         console.log('Удаляем задание', taskId);
         removeTaskData(storageKey, taskId);
+        // todo можно для простоты удалить отдельную строку ?
         clearList(list);
         renderTasks(list, getTaskData(storageKey));
         return;
       } else {
-        console.log('Задание не удаляем');
+        console.log('Задание не удалено!');
       }
     }
 
-    // * завершение задания --перечеркнуть--
+    // * завершение задания finish --перечеркнуть--
     if (target.classList.contains('btn_done')) {
-      // todo проверять завершина ли уже задача
+      // проверять завершина ли уже задача
       const taskId = target.dataset?.id;
-      console.log(getDataOfTask(storageKey, taskId)); // ??
+      const task = getDataOfTask(storageKey, taskId);
       console.log('Завершаем задание', taskId);
-      finishTaskData(storageKey, taskId);
-      // изменяем поле и перерендериваем
-      // todo можно отдельную строку
-      clearList(list);
-      renderTasks(list, getTaskData(storageKey));
-      return;
+
+      if (task.status === 'done') {
+        console.log('Задание уже завершено ))');
+        // ничего не делаем
+        return;
+      } else {
+        console.log('Задание еще выполняется');
+        // изменяем поле и перерендериваем
+        finishTaskData(storageKey, taskId);
+        // todo можно для прототы изменить только отдельную строку
+        clearList(list);
+        renderTasks(list, getTaskData(storageKey));
+        return;
+      }
     }
   });
 

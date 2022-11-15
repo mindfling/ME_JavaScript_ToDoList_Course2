@@ -33,7 +33,7 @@ export const finishTaskData = (storageKey, taskId) => {
   const updateData = data.map((task) => {
     // выбираем по id
     if (task.id === taskId) {
-      console.log(task);
+      // console.log(task);
       // изменяем поле выполнено
       task.status = 'done'; //
       return task;
@@ -44,16 +44,10 @@ export const finishTaskData = (storageKey, taskId) => {
   setTaskData(storageKey, updateData);
 };
 
-
+// возвращает объект данных о задании с нужным id
 export const getDataOfTask = (storageKey, taskId) => {
   const data = getTaskData(storageKey);
-  const tasks = data.filter((task) => (task.id == taskId));
-  return tasks;
-};
-
-// get Data Product
-export const getDataProduct = (data, id) => {
   // eslint-disable-next-line eqeqeq
-  const products = data.filter(product => (product.id == id));
-  return products[0];
+  const tasks = data.filter((task) => (task.id == taskId));
+  return tasks[0];
 };

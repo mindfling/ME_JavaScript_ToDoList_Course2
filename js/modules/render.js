@@ -12,15 +12,13 @@ export const rowsNumberRecount = (list) => {
 
 // * clear list
 export const clearList = (list) => {
-  // const list = document.querySelector('.table-body');
-  console.log('list: ', list);
-
   while (list.lastChild) {
     list.lastChild.remove();
   }
 };
 
 export const renderTasks = (list, tasksData) => {
+  console.log('ПЕРЕНДЕРИВАЕМ');
   console.log('tasksData: ', tasksData);
   // перебираем массив объектов
   if (Array.isArray(tasksData) && tasksData.length > 0) {
@@ -71,4 +69,4 @@ export const renderTasks = (list, tasksData) => {
 export const renderApp = ({}) => {
   // todo render all in app
   return;
-}
+};
