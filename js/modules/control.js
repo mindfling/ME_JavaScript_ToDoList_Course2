@@ -15,17 +15,12 @@ export const formControl = ({form, list, storageKey}) => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     console.log('form submited');
-
     const formdata = new FormData(form).entries();
     const fields = Object.fromEntries(formdata);
-
-    const newTask = {
-      // number: parseInt(Math.random().toString().substring(2, 6)), // toda
-      id: getRandomId(), // string
-      description: fields.description, // description
-      priority: 'обычный приоритет', // toda select [light | warning | denger]
-      status: 'wait', // fields.status, // toda [wait | done]
-    };
+    const newTask = {};
+    Object.assign(newTask, fields); // description, priority
+    newTask.id = getRandomId(); // id
+    newTask.status = 'wait'; // status
     addTaskData(storageKey, newTask);
     clearList(list);
     renderTasks(list, getTaskData(storageKey));
@@ -63,4 +58,9 @@ export const tableControl = ({data, list, storageKey}) => {
   });
 
   return list;
+};
+
+export const modalControl = (modal) => {
+  console.log('init modal form prompt');
+  return;
 };

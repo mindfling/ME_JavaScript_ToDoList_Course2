@@ -21,6 +21,7 @@ export const clearList = (list) => {
 };
 
 export const renderTasks = (list, tasksData) => {
+  console.log('tasksData: ', tasksData);
   // перебираем массив объектов
   if (Array.isArray(tasksData) && tasksData.length > 0) {
     // вставляем ряды в таблицу

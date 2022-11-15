@@ -29,9 +29,7 @@ const init = (appSelector, appTitle) => {
   const userData = getLoginAuthStorageKey();
   const STORAGE_KEY = userData.storageKey;
   const {userName} = userData;
-  console.log('userName: ', userName);
   const data = getTaskData(STORAGE_KEY);
-  console.log('STORAGE_KEY: ', STORAGE_KEY);
 
 
   // добавляем заголовок in render.js

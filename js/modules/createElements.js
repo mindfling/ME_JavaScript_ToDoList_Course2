@@ -51,12 +51,20 @@ export const createForm = () => {
   });
 
   const lable = createElement('label', {
-    className: 'form-group me-3 mb-0',
-    innerHTML: `<input name="description" type="text" class="form-control" placeholder="ввести задачу">`, // ???
+    className: 'form-group mb-0 me-1 w-100',
+    innerHTML: `<input name="description" type="text" class="form-control w-100" placeholder="ввести задачу">`, // ???
+  });
+
+  const select = createElement('select', {
+    className: 'form-select form-control-sm w-50 me-3',
+    name: 'priority',
+    innerHTML: `<option selected value="light">обычная</option>
+<option value="warning">важная</option>
+<option value="danger">срочная</option>`,
   });
 
   const buttonSubmit = createButton({
-    className: 'btn btn-primary me-3',
+    className: 'btn btn-primary me-1',
     textContent: 'Сохранить',
     type: 'submit',
   });
@@ -67,7 +75,7 @@ export const createForm = () => {
     type: 'reset',
   });
 
-  form.append(lable, buttonSubmit, buttonReset);
+  form.append(lable, select, buttonSubmit, buttonReset);
   return form;
 };
 
@@ -116,20 +124,34 @@ export const createRow = ({
   const row = createElement('tr', {
     id,
     className: 'table__row',
+    title: description,
   });
-  if (status === 'wait') {
-    row.classList.add('table-warning');
-  } else if (status === 'done') {
-    row.classList.add('table-primary', 'text-decoration-line-through'); // * перечерк line-through
+
+  if (priority === 'warning') {
+    row.classList.add('table-warning'); // важные
+  } else if (priority === 'danger') {
+    row.classList.add('table-danger'); // срочные
   } else {
-    row.classList.add('table-light');
+    row.classList.add('table-light'); // остальные обычные
   }
 
   // todo перечеркивание поля а не всей строки
-  const tdCellNumber = createElement('td', {className: 'table__cell table__cell_number'}, number ? number : 0); // порядковый номер в ячейке
+  const tdCellNumber = createElement('td', {className: 'table__cell table__cell_number fw-bold text-secondary'}, number ? number : 0); // порядковый номер в ячейке
+
   const tdCellTask = createElement('td', {className: 'table__cell table__cell_task'}, description); // описание
-  const tdCellStatus = createElement('td', {className: 'table__cell table__cell_elemnt'}, status); // статус [wait | done]
+  if (status === 'done') {
+    // tdCellTask.classList.add('table-warning');
+    tdCellTask.classList.add('text-decoration-line-through'); // * перечерк line-through
+  }
+
+  const tdCellStatus = createElement('td', {
+    className: 'table__cell table__cell_status',
+  },
+  (status === 'done' ? 'Завершена' : 'Выполняется'), // ? статус wait | done
+  );
+
   const tdCellAction = createElement('td', {className: 'table__cell table__cell_action'}); // кнопки действий над задачей [Удалить | Завершить]
+
   row.append(tdCellNumber, tdCellTask, tdCellStatus, tdCellAction);
   const btnDangerRemove = createButton({
     id,
