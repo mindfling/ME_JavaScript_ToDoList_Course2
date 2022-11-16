@@ -5,3 +5,9 @@ body {
   background: rgba(253,187,45,1);
   background: linear-gradient(333deg, rgba(199, 20, 231, 0.809) 7%, rgba(253,187,45,1) 93%);  
 }
+
+::selection {
+  color: #fff;
+  background-color: #ff6d48;
+  /* background-color: rgba(199, 20, 231, 0.7); */
+}

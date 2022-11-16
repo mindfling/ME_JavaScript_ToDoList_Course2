@@ -2,6 +2,7 @@
 
 import {
   createForm,
+  createModal,
   createTable,
   createTitle,
   modifyAppContainer,
@@ -23,6 +24,8 @@ const init = (appSelector, appTitle) => {
   // модифицируем контейнер
   modifyAppContainer(app);
 
+  // const modal = createModal();
+  // app.append(modal);
 
   // * запрос имени in userLogin login.js
   // const STORAGE_KEY = 'todo';

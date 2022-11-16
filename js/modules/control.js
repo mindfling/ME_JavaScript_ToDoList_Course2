@@ -26,6 +26,26 @@ export const formControl = ({form, list, storageKey}) => {
     clearList(list);
     renderTasks(list, getTaskData(storageKey));
     form.reset();
+    const submit = form[2];
+    const reset = form[3];
+    submit.disabled = true;
+    reset.disabled = true;
+    return;
+  });
+  // обработка событий ввода в поле
+  form.description.addEventListener('input', (event) => {
+    const target = event.target;
+    const value = target.value;
+    const submit = form[2];
+    const reset = form[3];
+    if (value) {
+      submit.disabled = false;
+      reset.disabled = false;
+    } else {
+      submit.disabled = true;
+      reset.disabled = true;
+    }
+    return;
   });
   return;
 };

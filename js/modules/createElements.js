@@ -52,7 +52,7 @@ export const createForm = () => {
 
   const lable = createElement('label', {
     className: 'form-group mb-0 me-1 w-100',
-    innerHTML: `<input name="description" type="text" class="form-control w-100" placeholder="ввести задачу">`, // ???
+    innerHTML: `<input name="description" type="text" class="form-control w-100" placeholder="ввести задачу" required>`, // ???
   });
 
   const select = createElement('select', {
@@ -62,18 +62,21 @@ export const createForm = () => {
 <option value="warning">важная</option>
 <option value="danger">срочная</option>`,
   });
+  select.title = 'Задает важность задачи';
 
   const buttonSubmit = createButton({
     className: 'btn btn-primary me-1',
     textContent: 'Сохранить',
     type: 'submit',
   });
-
+  buttonSubmit.disabled = true;
+  
   const buttonReset = createButton({
     className: 'btn btn-warning',
     textContent: 'Очистить',
     type: 'reset',
   });
+  buttonReset.disabled = true;
 
   form.append(lable, select, buttonSubmit, buttonReset);
   return form;
@@ -147,6 +150,9 @@ export const createRow = ({
   },
   (status === 'done' ? 'Завершена' : 'Выполняется'), // ? статус wait | done
   );
+  if (status === 'done') {
+    tdCellStatus.classList.add('text-decoration-line-through'); // * перечерк line-through
+  }
 
   const tdCellAction = createElement('td', {className: 'table__cell table__cell_action'}); // кнопки действий над задачей [Удалить | Завершить]
 
@@ -168,3 +174,35 @@ export const createRow = ({
   return row;
 };
 
+export const createModal = () => {
+  const modal = createElement('div', {
+    className: 'modal fade',
+    id: 'authCustomForm',
+    tabindex: -1,
+  });
+  modal.innerHTML = `
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="form row g-3 needs-validation" novalidate name="authCustomForm01">
+          <div class="col-12">
+            <label for="validationCustom01" class="form-label">Здравствуйте, представьтесь пожалуйста!</label>
+            <input type="text" class="form-control" id="validationCustom01" placeholder="" required>
+            <div class="valid-feedback">Отлично!</div>
+            <div class="invalid-feedback">Необходимо ввести имя пользователя...</div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit" for="authCustomForm01">Войти</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  `;
+  console.log('modal: ', modal);
+  return modal;
+}
