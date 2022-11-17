@@ -10,10 +10,10 @@ import {
   removeTaskData,
 } from './serviceStorage.js';
 
-import {getRandomId} from './utils.js';
+import {getRandomId, trans, toCapitalizeString} from './utils.js';
 
 
-// * события формы submit и верификация поля
+// события формы submit и верификация поля
 export const formControl = ({form, list, storageKey}) => {
   // отрабатываем событие формы
   form.addEventListener('submit', (event) => {
@@ -22,10 +22,15 @@ export const formControl = ({form, list, storageKey}) => {
     const formdata = new FormData(form).entries();
     const fields = Object.fromEntries(formdata);
 
-    const newTask = {};
-    Object.assign(newTask, fields); // description, priority
-    newTask.id = getRandomId(); // id
-    newTask.status = 'wait'; // status
+    const newTask = {
+      id: getRandomId(),
+      description: toCapitalizeString(fields.description),
+      priority: fields.priority,
+      status: 'wait',
+    };
+    // Object.assign(newTask, fields); // description, priority
+    // newTask.id = getRandomId(); // id
+    // newTask.status = 'wait'; // status
     addTaskData(storageKey, newTask);
 
     const data = getTaskData(storageKey);
@@ -34,8 +39,8 @@ export const formControl = ({form, list, storageKey}) => {
 
     form.reset();
     const submit = form[2];
-    const reset = form[3];
     submit.disabled = true;
+    const reset = form[3];
     reset.disabled = true;
     return;
   });
@@ -66,14 +71,12 @@ export const formControl = ({form, list, storageKey}) => {
 };
 
 
-// * события таблицы действия с делами
+// события таблицы действия с делами
 export const tableControl = ({data, list, storageKey}) => {
-  console.log('table storageKey: ', storageKey);
   // навешиваем слушатель
   list.addEventListener('click', event => {
     const target = event.target;
-
-    // * удаление задания remove
+    // удаление задания remove
     if (target.classList.contains('btn_remove')) {
       // подтверждение на удаление задачи
       const taskId = target.dataset?.id;
@@ -91,8 +94,7 @@ export const tableControl = ({data, list, storageKey}) => {
         console.log('Задание не удалено!');
       }
     }
-
-    // * завершение задания finish --перечеркнуть--
+    // завершение задания finish --перечеркнуть--
     if (target.classList.contains('btn_done')) {
       // проверять завершина ли уже задача
       const taskId = target.dataset?.id;
@@ -118,25 +120,37 @@ export const tableControl = ({data, list, storageKey}) => {
 };
 
 
-// * события формы авторизации модального окна
-export const modalControl = ({
-  modal,
-  modalForm,
-  list,
-  storageKey,
-}, callback) => {
-  console.log('init modal form prompt');
-  console.log('modalForm: ', modalForm);
-  console.log('storageKey: ', storageKey);
-
-  const openModal = () => {
+// события формы авторизации модального окна
+export const modalControl = ({modal, modalForm}, callback) => {
+  const openModal = (modal) => {
     console.log('open modal');
-    return;
+    modal.classList.add('show');
+    modal.style.display = 'block';
   };
-  const closeModal = () => {
+  const closeModal = (modal) => {
     console.log('close modal');
-    return;
+    modal.classList.remove('show');
+    modal.style.display = 'none';
   };
+
+  // открыть модалку в самом начале
+  openModal(modal);
+  // навешиваем событие и ждем submit
+  modalForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const userNameCyr = modalForm.inputUserName.value.trim();
+    const userNameLat = trans(userNameCyr);
+    const storageKey = 'todo_app_' + userNameLat.toUpperCase();
+    const userData = {
+      userName: userNameCyr,
+      storageKey,
+    };
+    // после отработки модальной формы закрыть модалку
+    closeModal(modal);
+    // и перейти к следующим методам
+    callback(userData);
+  });
+
   return {
     openModal,
     closeModal,

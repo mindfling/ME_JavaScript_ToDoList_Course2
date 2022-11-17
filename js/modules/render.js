@@ -8,7 +8,6 @@ import {
   createRow,
 } from './createElements.js';
 
-import {getTaskData} from './serviceStorage.js';
 import {toCapitalizeString} from './utils.js';
 
 export const rowsNumberRecount = (list) => {
@@ -33,7 +32,6 @@ export const renderTasks = ({list, data}) => {
       list.append(
         createRow({
           id: task.id,
-          // number: task?.number,
           description: task.description,
           status: task.status,
           priority: task.priority,
@@ -69,16 +67,12 @@ export const renderTasks = ({list, data}) => {
 
 
 export const renderApp = ({app, appTitle, userData}) => {
-  console.log('Рендерим ВСЁ ПРИЛОЖЕНИЕ');
-  console.log('appTitle: ', appTitle);
-  console.log('userData: ', userData);
-  console.log('app: ', app);
+  console.log('Рендерим ПРИЛОЖЕНИЕ');
   const h1 = createTitle(appTitle +
     ' ' + toCapitalizeString(userData.userName));
   const form = createForm();
   const {table, tableWrapper, head, list} = createTable();
-  // const data = getTaskData(storageKey);
-  // renderTasks({list, data}); // весь перерендер списка здесь
+
   app.append(h1, form, tableWrapper);
 
   return {

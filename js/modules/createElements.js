@@ -2,9 +2,9 @@
 // * createElements.js
 
 // * get modifyAppContainer
-// модифицирует контейнер
+// модифицирует контейнер, добавляем bootstrap классы
 export const modifyAppContainer = (app) => {
-  console.log('app: ', app);
+  // console.log('app: ', app);
   app.classList.add(
     'app-container', // ?
     'vh-100',
@@ -34,22 +34,23 @@ export const createTitle = (title) => createElement('h1', {
 });
 
 // * button
-export const createButton = ({id, className, type = 'button', textContent}) => {
+export const createButton = ({id, className, type = 'button', textContent, title}) => {
   const button = createElement('button');
-  Object.assign(button, {className, type, textContent});
+  Object.assign(button, {className, type, textContent, title});
   if (id) {
     Object.assign(button, {id});
+  }
+  if (title) {
+    Object.assign(button, {title});
   }
   return button;
 };
 
 // * form
 export const createForm = () => {
-  console.log('CREATE FORM');
   const form = createElement('form', {
     className: 'task-form d-flex align-items-center mb-4',
     name: 'taskForm',
-    action: '#',
   });
 
   const lable = createElement('label', {
@@ -72,7 +73,7 @@ export const createForm = () => {
     type: 'submit',
   });
   buttonSubmit.disabled = true;
-  
+
   const buttonReset = createButton({
     className: 'btn btn-warning',
     textContent: 'Очистить',
@@ -86,7 +87,6 @@ export const createForm = () => {
 
 // * table
 export const createTable = () => {
-  console.log('CREAT TABLE');
   const tableWrapper = createElement('div', {
     className: 'table-wrapper',
   });
@@ -130,7 +130,7 @@ export const createRow = ({
   const row = createElement('tr', {
     id,
     className: 'table__row',
-    title: description,
+    title: (priority === 'danger' ? 'Срочно: ' : (priority === 'warning' ? 'Важно: ' : '')) + description,
   });
 
   if (priority === 'warning') {
@@ -164,12 +164,14 @@ export const createRow = ({
     // id,
     className: 'btn btn-danger btn_remove me-2',
     textContent: 'Удалить',
+    title: 'Удалить задание: ' + description,
   });
   btnDangerRemove.dataset.id = id;
   const btnSuccessDone = createButton({
     // id,
     className: 'btn btn-success btn_done',
     textContent: 'Завершить',
+    title: 'Завершить: ' + description,
   });
   btnSuccessDone.dataset.id = id;
   tdCellAction.append(btnDangerRemove, btnSuccessDone);
@@ -184,7 +186,8 @@ export const createModal = () => {
     id: 'authCustomForm',
     tabindex: -1,
   });
-  modal.innerHTML = `
+  // can be dynamic too
+  modal.insertAdjacentHTML('beforeend', `
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -205,7 +208,6 @@ export const createModal = () => {
       </div>
     </div>
   </div>
-  `;
-  console.log('CREATE MODAL modal: ', modal);
+  `);
   return modal;
 };

@@ -20,45 +20,48 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
+<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Auth
 </button>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="authCustomForm" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Авторизация</h5>
+        <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p class="text-secondary">Здравствуйте! Представьтесь, пожалуйста!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+        <form class="form row g-3 needs-validation" novalidate name="authCustomForm01">
+          <div class="col-12">
+            <label for="validationCustom01" class="form-label">Здравствуйте, представьтесь пожалуйста!</label>
+            <input type="text" class="form-control" id="validationCustom01" placeholder="" required>
+            <div class="valid-feedback">Отлично!</div>
+            <div class="invalid-feedback">Необходимо ввести имя пользователя...</div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit" for="authCustomForm01">Войти</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-  // const myModal = document.getElementById('#exampleModal');
-  // console.log('myModal: ', myModal);
-  // const myModal = new bootstrap.Modal(document.getElementById('#exampleModal'), {
-  //   keyboard: false
-  // });
-  // myModal.show();
-  // console.log('myModal: ', myModal);
-</script>
-
   <div class="app-container vh-100 w-100 d-flex align-items-center justify-content-center flex-column">
 
     <h3>Todo App</h3>
-    <form class="form d-flex align-items-center mb-3" action="#" method="GET">
-      <label class="form-group me-1 w-100">
-        <input type="text" class="form-control w-100" placeholder="ввести задачу">
+    <form class="form d-flex align-items-center mb-3 needs-validation" action="#" method="GET">
+      <label class="form-group me-1 w-100" for="validationTextTask">
+        <input type="text" class="form-control w-100" id="validationTextTask" placeholder="ввести задачу" required>
+        <div class="valid-tooltip">
+          Looks good!
+        </div>
+        <div class="invalid-tooltip">
+          Необходимо ввести текст задания
+        </div>
       </label>
+
       <select name="priority" class="form-select form-control-sm w-50 me-3" aria-label="Выберите важность задачи">
         <option selected value="light">обычная</option>
         <option value="warning">важная</option>
@@ -119,5 +122,25 @@
       </table>
     </div>
   </div>
+
+  
+<script>
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+  console.log('forms: ', forms);
+  // Loop over them and prevent submission
+  console.log('Array.prototype.slice.call(forms): ', Array.prototype.slice.call(forms));
+  Array.prototype.slice.call(forms)
+    .forEach(form => {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+</script>
+
 </body>
 </html>
