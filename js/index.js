@@ -1,60 +1,82 @@
 // * main index script *
 
 import {
-  createForm,
   createModal,
-  createTable,
-  createTitle,
   modifyAppContainer,
 } from './modules/createElements.js';
-import {getTaskData} from './modules/serviceStorage.js';
+
+import {getTaskData, setTaskData} from './modules/serviceStorage.js';
+
 import appElements from './modules/elements.js';
-import {getLoginAuthStorageKey} from './modules/login.js';
-import {renderApp, renderTasks} from './modules/render.js';
-import {formControl, tableControl} from './modules/control.js';
+
+
+import {clearList, renderApp, renderTasks} from './modules/render.js';
+
+import {formControl, modalControl, tableControl} from './modules/control.js';
+import {trans} from './modules/utils.js';
+
 
 const {getApp} = appElements;
 
 const init = (appSelector, appTitle) => {
   console.log('Загрузка...');
-
-  // далее работаем с приложение
-  // * получаем контейнер
   const app = getApp(appSelector);
   // модифицируем контейнер
   modifyAppContainer(app);
 
-  // const modal = createModal();
-  // app.append(modal);
+  const modal = createModal();
+  app.append(modal);
 
-  // * запрос имени in userLogin login.js
-  // const STORAGE_KEY = 'todo';
-  const userData = getLoginAuthStorageKey();
-  const STORAGE_KEY = userData.storageKey;
-  const {userName} = userData;
-  const data = getTaskData(STORAGE_KEY);
+  // * openModal() *
+  modal.classList.add('show');
+  modal.style.display = 'block';
 
+  console.log('modal: ', modal);
+  const modalForm = document.forms.modalAuthForm;
+  const inputUserName = modalForm.inputUserName;
+  const modalSubmit = modalForm[1];
+  console.log('modalForm: ', modalForm);
+  console.log('inputUserName: ', inputUserName);
+  console.log('modalSubmit: ', modalSubmit);
 
-  // добавляем заголовок in render.js
-  // renderApp()
-  const h1 = createTitle(appTitle + ' ' + userName);
-  console.log('appTitle: ', appTitle);
-  // добавляем форму вверху
-  const form = createForm();
-  // обертка таблицы и основа самой таблицы
-  const {table, tableWrapper, head, list} = createTable();
+  // modalControl(modalForm);
+  modalForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    // const target = event.target;
+    // console.log(modalForm.inputUserName.value);
+    const userNameCyr = modalForm.inputUserName.value.trim();
+    const userNameLat = trans(userNameCyr);
+    const storageKey = 'todo_app_' + userNameLat.toUpperCase();
+    const userData = {
+      userName: userNameCyr,
+      storageKey,
+    };
 
-  // просто рендерим список дел в List tableBody
-  renderTasks(list, data); // весь перерендер списка здесь
-  // добавляем все в дом
-  app.append(h1, form, tableWrapper);
+    // * closeModal() *
+    modal.classList.remove('show');
+    modal.style.display = 'none';
 
-  // после полного формирования списка его можно очищать и удалять
-  // clearList(list);
-  // вешаем слушатели на форму
-  formControl({form, list, storageKey: STORAGE_KEY});
-  // вешаем слушатели на список дел
-  tableControl({list, data, storageKey: STORAGE_KEY});
+    setTaskData('todo_app', JSON.stringify(userData));
+
+    // * запрос имени in userLogin login.js
+    // todo
+    const STORAGE_KEY = storageKey;
+    const data = getTaskData(STORAGE_KEY);
+
+    // рендерим каркас приложения
+    const {
+      form,
+      list,
+    } = renderApp({app, appTitle, userData});
+    // удаляем лишнее
+    clearList(list);
+    // рендерим списк дел
+    renderTasks({list, data});
+    // вешаем слушатели на форму
+    formControl({form, list, storageKey: STORAGE_KEY});
+    // вешаем слушатели на список дел
+    tableControl({list, data, storageKey: STORAGE_KEY});
+  });
 };
 
 window.initTodo = init;

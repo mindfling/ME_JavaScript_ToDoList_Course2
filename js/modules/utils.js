@@ -139,3 +139,6 @@ export const getRandomInt = (min, max) => {
   max = Math.floor(min > max ? min : max);
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+export const toCapitalizeString = (str) => 
+  str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();

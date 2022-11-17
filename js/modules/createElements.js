@@ -2,6 +2,7 @@
 // * createElements.js
 
 // * get modifyAppContainer
+// модифицирует контейнер
 export const modifyAppContainer = (app) => {
   console.log('app: ', app);
   app.classList.add(
@@ -44,6 +45,7 @@ export const createButton = ({id, className, type = 'button', textContent}) => {
 
 // * form
 export const createForm = () => {
+  console.log('CREATE FORM');
   const form = createElement('form', {
     className: 'task-form d-flex align-items-center mb-4',
     name: 'taskForm',
@@ -84,6 +86,7 @@ export const createForm = () => {
 
 // * table
 export const createTable = () => {
+  console.log('CREAT TABLE');
   const tableWrapper = createElement('div', {
     className: 'table-wrapper',
   });
@@ -118,11 +121,11 @@ export const createTable = () => {
 
 // * create row of task
 export const createRow = ({
-  id, // *
-  number = 1, // *
-  description, // *
-  status, // ?
-  priority, //
+  id,
+  number = 1,
+  description,
+  status,
+  priority,
 }) => {
   const row = createElement('tr', {
     id,
@@ -174,6 +177,7 @@ export const createRow = ({
   return row;
 };
 
+// * modal form with bs
 export const createModal = () => {
   const modal = createElement('div', {
     className: 'modal fade',
@@ -185,24 +189,23 @@ export const createModal = () => {
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="exampleModalLabel">Авторизация</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="form row g-3 needs-validation" novalidate name="authCustomForm01">
+        <form class="form row g-3 needs-validation" name="modalAuthForm">
           <div class="col-12">
-            <label for="validationCustom01" class="form-label">Здравствуйте, представьтесь пожалуйста!</label>
-            <input type="text" class="form-control" id="validationCustom01" placeholder="" required>
+            <label for="inputUserName" class="form-label">Здравствуйте, представьтесь пожалуйста!</label>
+            <input type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="" required>
             <div class="valid-feedback">Отлично!</div>
             <div class="invalid-feedback">Необходимо ввести имя пользователя...</div>
           </div>
           <div class="col-12">
-            <button class="btn btn-primary" type="submit" for="authCustomForm01">Войти</button>
+            <button class="btn btn-primary" type="submit" for="modalAuthForm">Войти</button>
           </div>
         </form>
       </div>
     </div>
   </div>
   `;
-  console.log('modal: ', modal);
+  console.log('CREATE MODAL modal: ', modal);
   return modal;
-}
+};

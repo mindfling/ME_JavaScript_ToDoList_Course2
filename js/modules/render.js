@@ -1,6 +1,15 @@
 // * render.js *** rendering dom elements in app
 
-import {createElement, createRow, createTitle} from './createElements.js';
+import {
+  createElement,
+  createForm,
+  createTitle,
+  createTable,
+  createRow,
+} from './createElements.js';
+
+import {getTaskData} from './serviceStorage.js';
+import {toCapitalizeString} from './utils.js';
 
 export const rowsNumberRecount = (list) => {
   const allNumbers = list.querySelectorAll('.table__cell_number');
@@ -17,17 +26,14 @@ export const clearList = (list) => {
   }
 };
 
-export const renderTasks = (list, tasksData) => {
+export const renderTasks = ({list, data}) => {
   console.log('ПЕРЕНДЕРИВАЕМ');
-  console.log('tasksData: ', tasksData);
-  // перебираем массив объектов
-  if (Array.isArray(tasksData) && tasksData.length > 0) {
-    // вставляем ряды в таблицу
-    tasksData.forEach((task, index) => {
+  if (Array.isArray(data) && data.length > 0) {
+    data.forEach((task, index) => {
       list.append(
         createRow({
           id: task.id,
-          number: task?.number,
+          // number: task?.number,
           description: task.description,
           status: task.status,
           priority: task.priority,
@@ -36,7 +42,7 @@ export const renderTasks = (list, tasksData) => {
     });
     rowsNumberRecount(list);
   } else {
-    // если список еще пуст рендерим заглушку
+    // заглушка
     const tr = createElement('tr', {
       className: 'table-row',
     });
@@ -44,12 +50,7 @@ export const renderTasks = (list, tasksData) => {
       className: 'table-cell text-center text-muted',
       colSpan: 4,
       rowSpan: 1,
-      // textContent: 'Список пока еще пуст...',
     });
-    // td.append( createElement('p', {
-      //   className: 'alert alert-success',
-      //   innerHTML: 'Список дел пока еще пуст...',
-      // }))
     td.append(
       createElement('p', {
         className: 'alert alert-danger show',
@@ -66,7 +67,24 @@ export const renderTasks = (list, tasksData) => {
   return;
 };
 
-export const renderApp = ({}) => {
-  // todo render all in app
-  return;
+
+export const renderApp = ({app, appTitle, userData}) => {
+  console.log('Рендерим ВСЁ ПРИЛОЖЕНИЕ');
+  console.log('appTitle: ', appTitle);
+  console.log('userData: ', userData);
+  console.log('app: ', app);
+  const h1 = createTitle(appTitle +
+    ' ' + toCapitalizeString(userData.userName));
+  const form = createForm();
+  const {table, tableWrapper, head, list} = createTable();
+  // const data = getTaskData(storageKey);
+  // renderTasks({list, data}); // весь перерендер списка здесь
+  app.append(h1, form, tableWrapper);
+
+  return {
+    form,
+    table,
+    head,
+    list,
+  };
 };
