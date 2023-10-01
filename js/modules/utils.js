@@ -131,7 +131,7 @@ export const trans = (word) => {
 };
 
 // * get Random digits string with substring
-export const getRandomId = () => Math.random().toString().substring(2, 10);
+export const getRandomId = () => Math.random().toString(32).substring(2, 12) + '_' + Date.now().toString(16);
 
 // * get Random Int untils for random ID form
 export const getRandomInt = (min, max) => {

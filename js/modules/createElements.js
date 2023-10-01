@@ -3,10 +3,12 @@
 
 // * get modifyAppContainer
 // модифицирует контейнер, добавляем bootstrap классы
+//!!! упрощаем js код
+/*
 export const modifyAppContainer = (app) => {
   // console.log('app: ', app);
   app.classList.add(
-    'app-container', // ?
+    'app-container',
     'vh-100',
     'w-100',
     'd-flex',
@@ -16,6 +18,7 @@ export const modifyAppContainer = (app) => {
   );
   return app;
 };
+*/
 
 // * create element
 export const createElement = (tag, param = {}, text) => {
@@ -162,14 +165,14 @@ export const createRow = ({
   row.append(tdCellNumber, tdCellTask, tdCellStatus, tdCellAction);
   const btnDangerRemove = createButton({
     // id,
-    className: 'btn btn-danger btn_remove me-2',
+    className: 'btn btn-danger btn_remove btn-sm me-2',
     textContent: 'Удалить',
     title: 'Удалить задание: ' + description,
   });
   btnDangerRemove.dataset.id = id;
   const btnSuccessDone = createButton({
     // id,
-    className: 'btn btn-success btn_done',
+    className: 'btn btn-success btn_done btn-sm',
     textContent: 'Завершить',
     title: 'Завершить: ' + description,
   });

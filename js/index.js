@@ -2,27 +2,31 @@
 
 import {
   createModal,
-  modifyAppContainer,
+  // modifyAppContainer,
 } from './modules/createElements.js';
 
 import {getTaskData, setTaskData} from './modules/serviceStorage.js';
-import appElements from './modules/elements.js';
+// import appElements from './modules/elements.js';
 import {clearList, renderApp, renderTasks} from './modules/render.js';
 import {formControl, modalControl, tableControl} from './modules/control.js';
 
-const {getApp} = appElements;
+// const {getApp} = appElements;
 
 
 const init = (appSelector, appTitle) => {
   console.log('Загрузка...');
-  const app = getApp(appSelector);
-  modifyAppContainer(app);
+  const app = document.querySelector('.app-container');
+  // const app = getApp(appSelector);
+  // modifyAppContainer(app);
 
+  // после перезагрузки страницы сразу же 
+  // ** модальное окно входа
   const modal = createModal();
   app.append(modal);
 
   const modalForm = document.forms.modalAuthForm;
 
+  // когда форма закрыта
   const callAfterModal = (userData) => {
     console.log('modal control callback', userData);
     // сохраняем данные пользователя
@@ -30,7 +34,7 @@ const init = (appSelector, appTitle) => {
 
     const STORAGE_KEY = userData.storageKey;
     const data = getTaskData(STORAGE_KEY);
-    // console.log('data: ', data);
+    console.log('data: ', data);
     // рендерим каркас приложения
     const {form, list} = renderApp({app, appTitle, userData});
     clearList(list);
@@ -42,5 +46,6 @@ const init = (appSelector, appTitle) => {
   modalControl({modal, modalForm}, callAfterModal);
 };
 
+// window.initTodo = init;
+init('.app-container', 'Список дел');
 
-window.initTodo = init;

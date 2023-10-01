@@ -1,3 +1,4 @@
+//!! это перенесли в init
 // * dom consts app elements:
 const getApp = (selector) => document.querySelector(selector);
 
@@ -7,3 +8,4 @@ export default {
   app,
   getApp,
 };
+

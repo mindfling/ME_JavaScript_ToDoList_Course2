@@ -6,6 +6,7 @@
 // получаем текущие данные из хранилища
 export const getTaskData = (storageKey) => {
   const storageData = localStorage.getItem(storageKey);
+  console.log('storageData: ', storageData);
   return (storageData ? JSON.parse(storageData) : []);
 };
 

@@ -1,3 +1,4 @@
+//!! эта не уже не нужна
 // * login authorisation logic
 
 import {trans} from './utils.js';
