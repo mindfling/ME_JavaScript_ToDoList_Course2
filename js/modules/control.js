@@ -100,6 +100,8 @@ export const tableControl = ({data, list, storageKey}) => {
       const taskId = target.dataset?.id;
       const task = getDataOfTask(storageKey, taskId);
       console.log('Завершаем задание', taskId);
+      // todo деактивировать кнопку
+      target.disabled = 'true';
 
       if (task.status === 'done') {
         console.log('Задание уже завершено ))'); // ничего не делаем

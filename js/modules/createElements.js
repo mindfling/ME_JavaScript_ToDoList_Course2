@@ -176,6 +176,9 @@ export const createRow = ({
     textContent: 'Завершить',
     title: 'Завершить: ' + description,
   });
+  if (status === 'done') {
+    btnSuccessDone.disabled = 'true';
+  }
   btnSuccessDone.dataset.id = id;
   tdCellAction.append(btnDangerRemove, btnSuccessDone);
   // возворащаем весь наш ряд Задачи
