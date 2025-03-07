@@ -6,13 +6,15 @@
 // получаем текущие данные из хранилища
 export const getTaskData = (storageKey) => {
   const storageData = localStorage.getItem(storageKey);
-  console.log('storageData: ', storageData);
+  console.log('in getTaskData storageData: ', storageData);
   return (storageData ? JSON.parse(storageData) : []);
 };
 
 // сохраняем данные обратно в хранилище
-export const setTaskData = (storageKey, data) =>
+export const setTaskData = (storageKey, data) => {
+  console.log('in setTaskData storageKey:', storageKey, 'set this data:', data, JSON.stringify(data));
   localStorage.setItem(storageKey, JSON.stringify(data));
+}
 
 // добавляем контакт к данным
 export const addTaskData = (storageKey, task) => {
